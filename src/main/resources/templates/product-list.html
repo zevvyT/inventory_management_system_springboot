@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management - Product List</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📦 Inventory Management System</h1>
+            <p class="subtitle">Manage your products efficiently</p>
+        </header>
+
+        <!-- Success Message -->
+        <div th:if="${message}" class="alert alert-success">
+            <span th:text="${message}"></span>
+        </div>
+
+        <div class="toolbar">
+            <a th:href="@{/products/new}" class="btn btn-primary">
+                ➕ Add New Product
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Product Inventory</h2>
+                <span class="badge" th:text="${products.size()} + ' items'">0 items</span>
+            </div>
+
+            <div th:if="${products.isEmpty()}" class="empty-state">
+                <p>📭 No products found. Start by adding your first product!</p>
+            </div>
+
+            <table th:unless="${products.isEmpty()}">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Product Name</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Created Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.id}">1</td>
+                        <td th:text="${product.name}">Product Name</td>
+                        <td th:text="${product.description}">Description</td>
+                        <td>
+                            <span class="quantity-badge" 
+                                  th:classappend="${product.quantity < 10} ? 'low-stock' : 'in-stock'"
+                                  th:text="${product.quantity}">0</span>
+                        </td>
+                        <td th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}">$0.00</td>
+                        <td th:text="${#temporals.format(product.createdDate, 'yyyy-MM-dd HH:mm')}">2024-01-01</td>
+                        <td class="actions">
+                            <a th:href="@{/products/edit/{id}(id=${product.id})}" class="btn btn-edit">✏️ Edit</a>
+                            <a th:href="@{/products/delete/{id}(id=${product.id})}" 
+                               class="btn btn-delete"
+                               onclick="return confirm('Are you sure you want to delete this product?')">
+                                🗑️ Delete
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Inventory Management System | Built with Spring Boot & Thymeleaf</p>
+        </footer>
+    </div>
+</body>
+</html>
