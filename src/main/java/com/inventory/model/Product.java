@@ -32,6 +32,10 @@ public class Product {
     @Column(nullable = false)
     private Double price;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ProductCategory category = ProductCategory.GENERAL_DRY_GOODS;
+
     @CreationTimestamp
     @Column(name = "created_date", nullable = false, updatable = false)
     private LocalDateTime createdDate;

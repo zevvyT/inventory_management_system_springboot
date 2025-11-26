@@ -1,6 +1,7 @@
 package com.inventory.controller;
 
 import com.inventory.model.Product;
+import com.inventory.model.ProductCategory;
 import com.inventory.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,12 @@ public class ProductController {
     @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
+    }
+
+    // Make categories available to all views
+    @ModelAttribute("categories")
+    public ProductCategory[] getCategories() {
+        return ProductCategory.values();
     }
 
     // Redirect root to product list

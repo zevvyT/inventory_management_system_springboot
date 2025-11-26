@@ -2,5 +2,6 @@ com\inventory\service\ProductService.class
 com\inventory\repository\ProductRepository.class
 com\inventory\controller\ProductController.class
 com\inventory\model\Product.class
+com\inventory\model\ProductCategory.class
 com\inventory\service\ProductServiceImpl.class
 com\inventory\InventoryManagementApplication.class
